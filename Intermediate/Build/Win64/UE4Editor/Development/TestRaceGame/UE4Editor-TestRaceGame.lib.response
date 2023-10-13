@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-TestRaceGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\TestRaceGameEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\TestRaceGame.cpp.obj"
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\TestRaceGameGameModeBase.cpp.obj"
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\TestRaceGame.init.gen.cpp.obj"
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\TestRaceGameGameModeBase.gen.cpp.obj"
+"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\Default.rc2.res"
+/OUT:"C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\UE4Editor-TestRaceGame.lib"
+/INCLUDE:IMPLEMENT_MODULE_TestRaceGame

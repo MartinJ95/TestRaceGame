@@ -1,0 +1,7 @@
+C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\Definitions.TestRaceGame.h
+C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Source\TestRaceGame\TestRaceGameGameModeBase.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
+C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Inc\TestRaceGame\TestRaceGameGameModeBase.generated.h

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\TestRaceGame.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{539A28AD-057C-42C2-9F80-C64D64C8CF6F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TestRaceGame.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\TestRaceGameEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{8A0B7543-E13D-450C-B132-580175DF9EF1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\TestRaceGame">
+      <UniqueIdentifier>{146859E6-C585-4C7D-8EA0-3FA385D33D4F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\TestRaceGame\TestRaceGame.Build.cs">
+      <Filter>Source\TestRaceGame</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\TestRaceGame\TestRaceGame.cpp">
+      <Filter>Source\TestRaceGame</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TestRaceGame\TestRaceGame.h">
+      <Filter>Source\TestRaceGame</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\TestRaceGame\TestRaceGameGameModeBase.cpp">
+      <Filter>Source\TestRaceGame</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\TestRaceGame\TestRaceGameGameModeBase.h">
+      <Filter>Source\TestRaceGame</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
