@@ -12,23 +12,15 @@ struct FEditorFunction
 {
 	GENERATED_BODY()
 public:
-	FEditorFunction() : m_shouldRun(false), m_function([](void* ptr) {}), ownerPtr(nullptr) {}
-	FEditorFunction(const std::function<void(void*)>& function, void* owner) : m_shouldRun(false), m_function(function), ownerPtr(owner) {}
-	void CheckRunFunction()
-	{
-		if (m_shouldRun)
-		{
-			m_function(ownerPtr);
-			m_shouldRun = false;
-		}
-	}
+	FEditorFunction();
+	FEditorFunction(void* owner);
+	FEditorFunction(const std::function<void(void* ptr)>& function, void* owner);
+	void CheckRunFunction();
 protected:
 	UPROPERTY(EditAnywhere)
 		bool m_shouldRun;
-	UPROPERTY()
-		std::function<void(void*)> m_function = [](void* ptr) {};
-	UPROPERTY()
-		void* ownerPtr;
+		std::function<void(void* ptr)> m_function = [](void* ptr) {};
+		void* ptr;
 };
 
 
@@ -46,8 +38,15 @@ protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere)
 	TArray<ARaceTrackSegment*> m_segments;
+#if WITH_EDITOR
+	UPROPERTY(EditAnywhere)
+	FEditorFunction m_addSegment;
+#endif
+	bool m_editorRunning = false;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual bool ShouldTickIfViewportsOnly() const override;
 
 };
