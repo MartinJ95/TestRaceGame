@@ -77,6 +77,20 @@ inline void ARaceTrackSegment::SetControlPoint(float& sideDir)
 	m_controlPoint = toEnd;
 }
 
+inline FVector ARaceTrackSegment::GetPosition(float& t)
+{
+	if (t > 1.f)
+	{
+		t -= 1.f;
+		return m_endPoint;
+	}
+	if (t <= 0)
+	{
+		return m_startPoint;
+	}
+	return (FMath::Square(1.f - t)) * m_startPoint + 2 * t * (1.f - t) * m_controlPoint + FMath::Square(t) * m_endPoint;
+}
+
 // Called every frame
 void ARaceTrackSegment::Tick(float DeltaTime)
 {
