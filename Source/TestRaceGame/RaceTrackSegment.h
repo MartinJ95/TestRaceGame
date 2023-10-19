@@ -23,6 +23,7 @@ protected:
 	inline void SetStartPosition(ARaceTrackSegment* previous);
 	inline void SetEndPointRotation(ARaceTrackSegment* previous);
 	inline void SetEndPoint(ARaceTrackSegment* previous, float& sideDir);
+	inline void SetControlPoint(float& sideDir);
 protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;

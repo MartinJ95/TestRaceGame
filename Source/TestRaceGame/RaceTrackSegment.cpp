@@ -65,7 +65,16 @@ inline void ARaceTrackSegment::SetEndPoint(ARaceTrackSegment* previous, float& s
 	rotatedStartDir.RotateAngleAxis(startRotation.Z, FVector::UpVector);
 	sideDir = m_endPointRotation.Z - startRotation.Z > 0 ? 1.f : -1.f;
 
-	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * (sideDir * m_endPointRotation.Z);
+	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * (FMath::Abs(sideDir) * m_endPointRotation.Z);
+}
+
+inline void ARaceTrackSegment::SetControlPoint(float& sideDir)
+{
+	FVector toEnd = m_endPoint - m_startPoint;
+	toEnd *= 0.5;
+	float distance = toEnd.Size()*0.5f;
+	toEnd += (FVector::CrossProduct(m_startPoint, m_endPoint).GetSafeNormal() * (sideDir * 45.f));
+	m_controlPoint = toEnd;
 }
 
 // Called every frame
