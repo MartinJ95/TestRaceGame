@@ -21,6 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	inline void SetStartPosition(ARaceTrackSegment* previous);
+	inline void SetEndPointRotation(ARaceTrackSegment* previous);
 protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "RaceTrackSegment.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 ARaceTrackSegment::ARaceTrackSegment()
@@ -41,6 +41,16 @@ inline void ARaceTrackSegment::SetStartPosition(ARaceTrackSegment* previous)
 		return;
 	}
 	m_startPoint = previous->m_endPoint;
+}
+
+inline void ARaceTrackSegment::SetEndPointRotation(ARaceTrackSegment* previous)
+{
+	if (previous == nullptr)
+	{
+		m_endPointRotation = FVector(0.f, FMath::FRandRange(-30.f, 30.f), FMath::FRandRange(-30.f, 30.f));
+		return;
+	}
+	m_endPointRotation = previous->m_endPointRotation + FVector(0.f, FMath::FRandRange(-30.f, 30.f), FMath::FRandRange(-30.f, 30.f));
 }
 
 // Called every frame
