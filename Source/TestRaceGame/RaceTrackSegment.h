@@ -16,13 +16,24 @@ public:
 	// Sets default values for this actor's properties
 	ARaceTrackSegment();
 	void SetMesh(UStaticMesh* newMesh);
+	void SetPositioning(ARaceTrackSegment* previous);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	inline void SetStartPosition(ARaceTrackSegment* previous);
+protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;
 	UPROPERTY()
 	UStaticMeshComponent* m_meshComp;
+	UPROPERTY()
+		FVector m_startPoint;
+	UPROPERTY()
+	FVector m_controlPoint;
+	UPROPERTY()
+		FVector m_endPoint;
+	UPROPERTY()
+		FVector m_endPointRotation;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

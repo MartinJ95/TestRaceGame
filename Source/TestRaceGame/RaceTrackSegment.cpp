@@ -21,11 +21,26 @@ void ARaceTrackSegment::SetMesh(UStaticMesh* newMesh)
 	m_meshComp->SetStaticMesh(m_segmentMesh);
 }
 
+void ARaceTrackSegment::SetPositioning(ARaceTrackSegment* previous)
+{
+	SetStartPosition(previous);
+}
+
 // Called when the game starts or when spawned
 void ARaceTrackSegment::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+inline void ARaceTrackSegment::SetStartPosition(ARaceTrackSegment* previous)
+{
+	if (previous == nullptr)
+	{
+		m_startPoint = FVector::ZeroVector;
+		return;
+	}
+	m_startPoint = previous->m_endPoint;
 }
 
 // Called every frame
