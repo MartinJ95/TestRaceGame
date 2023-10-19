@@ -53,6 +53,21 @@ inline void ARaceTrackSegment::SetEndPointRotation(ARaceTrackSegment* previous)
 	m_endPointRotation = previous->m_endPointRotation + FVector(0.f, FMath::FRandRange(-30.f, 30.f), FMath::FRandRange(-30.f, 30.f));
 }
 
+inline void ARaceTrackSegment::SetEndPoint(ARaceTrackSegment* previous, float& sideDir)
+{
+	FVector startRotation = FVector::ZeroVector;
+	if (previous != nullptr)
+		startRotation = previous->m_endPointRotation;
+	m_endPoint = m_startPoint + (FVector::ForwardVector * (m_segmentMesh->GetBounds().SphereRadius * 2) * (1.f-(m_endPointRotation.Z / 30.f)));
+	
+	FVector rotatedStartDir = FVector::ForwardVector;
+	rotatedStartDir.RotateAngleAxis(startRotation.Y, FVector::RightVector);
+	rotatedStartDir.RotateAngleAxis(startRotation.Z, FVector::UpVector);
+	sideDir = m_endPointRotation.Z - startRotation.Z > 0 ? 1.f : -1.f;
+
+	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * (sideDir * m_endPointRotation.Z);
+}
+
 // Called every frame
 void ARaceTrackSegment::Tick(float DeltaTime)
 {

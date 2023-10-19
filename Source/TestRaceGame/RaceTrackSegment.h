@@ -22,6 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 	inline void SetStartPosition(ARaceTrackSegment* previous);
 	inline void SetEndPointRotation(ARaceTrackSegment* previous);
+	inline void SetEndPoint(ARaceTrackSegment* previous, float& sideDir);
 protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;
