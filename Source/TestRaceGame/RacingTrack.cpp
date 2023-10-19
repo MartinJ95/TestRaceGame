@@ -31,8 +31,9 @@ ARacingTrack::ARacingTrack() : m_segments()
 		ARacingTrack* track = static_cast<ARacingTrack*>(ptr);
 		if (track == nullptr)
 			return;
-		track->m_segments.Emplace(track->GetWorld()->SpawnActor<ARaceTrackSegment>(ARaceTrackSegment::StaticClass()));
-		
+		track->GetSegments().Emplace(track->GetWorld()->SpawnActor<ARaceTrackSegment>(ARaceTrackSegment::StaticClass()));
+		track->GetSegments().Last()->SetMesh(track->GetMesh());
+		track->GetSegments().Last()->SetActorTransform(FTransform(FVector(0.f, 0.f, 0.f) + (FVector(1.f, 0.f, 0.f) * (track->GetMesh()->GetBounds().SphereRadius*2)) * (track->GetSegments().Num()-1)));
 	}, this)
 #endif
 {
@@ -43,6 +44,16 @@ ARacingTrack::ARacingTrack() : m_segments()
 	m_editorRunning = true;
 #endif
 }
+
+		UStaticMesh* ARacingTrack::GetMesh() const
+		{
+			return m_pathSegmentMesh;
+		}
+
+		TArray<ARaceTrackSegment*>& ARacingTrack::GetSegments()
+		{
+			return m_segments;
+		}
 
 
 // Called when the game starts or when spawned

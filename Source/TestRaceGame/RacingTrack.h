@@ -32,15 +32,21 @@ class TESTRACEGAME_API ARacingTrack : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ARacingTrack();
+	UStaticMesh* GetMesh() const;
+	TArray<ARaceTrackSegment*>& GetSegments();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere)
 	TArray<ARaceTrackSegment*> m_segments;
+	UPROPERTY(EditAnywhere)
+	UStaticMesh* m_pathSegmentMesh;
 #if WITH_EDITOR
 	UPROPERTY(EditAnywhere)
 	FEditorFunction m_addSegment;
+	UPROPERTY(EditAnywhere)
+		FEditorFunction m_positionSegments;
 #endif
 	bool m_editorRunning = false;
 public:	
