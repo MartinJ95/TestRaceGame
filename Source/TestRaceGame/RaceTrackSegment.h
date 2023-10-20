@@ -16,14 +16,14 @@ public:
 	// Sets default values for this actor's properties
 	ARaceTrackSegment();
 	void SetMesh(UStaticMesh* newMesh, UMaterialInterface* material);
-	void SetPositioning(ARaceTrackSegment* previous);
+	void SetPositioning(const ARaceTrackSegment* previous);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	inline void SetStartPosition(ARaceTrackSegment* previous);
-	inline void SetEndPointRotation(ARaceTrackSegment* previous);
-	inline void SetEndPoint(ARaceTrackSegment* previous, float& sideDir);
-	inline void SetControlPoint(float& sideDir);
+	inline void SetStartPosition(const ARaceTrackSegment* previous);
+	inline void SetEndPointRotation(const ARaceTrackSegment* previous);
+	inline void SetEndPoint(const ARaceTrackSegment* previous, float& sideDir);
+	inline void SetControlPoint(const float& sideDir);
 	inline void SetDynamicInstance(UMaterialInterface* material);
 	inline void UpdateDynamicInstance();
 	inline FVector GetPosition(float& t);

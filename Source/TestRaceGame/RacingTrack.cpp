@@ -91,6 +91,7 @@ void ARacingTrack::Tick(float DeltaTime)
 	if (m_editorRunning)
 	{
 		m_addSegment.CheckRunFunction();
+		m_positionSegments.CheckRunFunction();
 		return;
 	}
 #endif
