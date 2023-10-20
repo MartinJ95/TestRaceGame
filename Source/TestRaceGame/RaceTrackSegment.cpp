@@ -12,13 +12,14 @@ ARaceTrackSegment::ARaceTrackSegment()
 	m_meshComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
-void ARaceTrackSegment::SetMesh(UStaticMesh* newMesh)
+void ARaceTrackSegment::SetMesh(UStaticMesh* newMesh, UMaterialInterface* material)
 {
 	m_segmentMesh = newMesh;
 	if (m_segmentMesh == nullptr)
 		return;
 
 	m_meshComp->SetStaticMesh(m_segmentMesh);
+	SetDynamicInstance(material);
 }
 
 void ARaceTrackSegment::SetPositioning(ARaceTrackSegment* previous)
@@ -75,6 +76,11 @@ inline void ARaceTrackSegment::SetControlPoint(float& sideDir)
 	float distance = toEnd.Size()*0.5f;
 	toEnd += (FVector::CrossProduct(m_startPoint, m_endPoint).GetSafeNormal() * (sideDir * 45.f));
 	m_controlPoint = toEnd;
+}
+
+inline void ARaceTrackSegment::SetDynamicInstance(UMaterialInterface* material)
+{
+	m_materialInstance = UMaterialInstanceDynamic::Create(material, this);
 }
 
 inline FVector ARaceTrackSegment::GetPosition(float& t)

@@ -33,6 +33,7 @@ public:
 	// Sets default values for this actor's properties
 	ARacingTrack();
 	UStaticMesh* GetMesh() const;
+	UMaterialInterface* GetMaterial() const;
 	TArray<ARaceTrackSegment*>& GetSegments();
 
 protected:
@@ -42,6 +43,8 @@ protected:
 	TArray<ARaceTrackSegment*> m_segments;
 	UPROPERTY(EditAnywhere)
 	UStaticMesh* m_pathSegmentMesh;
+	UPROPERTY(EditAnywhere)
+		UMaterialInterface* m_material;
 #if WITH_EDITOR
 	UPROPERTY(EditAnywhere)
 	FEditorFunction m_addSegment;

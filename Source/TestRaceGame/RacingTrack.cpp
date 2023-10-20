@@ -32,7 +32,7 @@ ARacingTrack::ARacingTrack() : m_segments()
 		if (track == nullptr)
 			return;
 		track->GetSegments().Emplace(track->GetWorld()->SpawnActor<ARaceTrackSegment>(ARaceTrackSegment::StaticClass()));
-		track->GetSegments().Last()->SetMesh(track->GetMesh());
+		track->GetSegments().Last()->SetMesh(track->GetMesh(), track->GetMaterial());
 		track->GetSegments().Last()->SetActorTransform(FTransform(FVector(0.f, 0.f, 0.f) + (FVector(1.f, 0.f, 0.f) * (track->GetMesh()->GetBounds().SphereRadius*2)) * (track->GetSegments().Num()-1)));
 	}, this)
 #endif
@@ -48,6 +48,11 @@ ARacingTrack::ARacingTrack() : m_segments()
 		UStaticMesh* ARacingTrack::GetMesh() const
 		{
 			return m_pathSegmentMesh;
+		}
+
+		UMaterialInterface* ARacingTrack::GetMaterial() const
+		{
+			return m_material;
 		}
 
 		TArray<ARaceTrackSegment*>& ARacingTrack::GetSegments()

@@ -15,7 +15,7 @@ class TESTRACEGAME_API ARaceTrackSegment : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ARaceTrackSegment();
-	void SetMesh(UStaticMesh* newMesh);
+	void SetMesh(UStaticMesh* newMesh, UMaterialInterface* material);
 	void SetPositioning(ARaceTrackSegment* previous);
 protected:
 	// Called when the game starts or when spawned
@@ -24,6 +24,7 @@ protected:
 	inline void SetEndPointRotation(ARaceTrackSegment* previous);
 	inline void SetEndPoint(ARaceTrackSegment* previous, float& sideDir);
 	inline void SetControlPoint(float& sideDir);
+	inline void SetDynamicInstance(UMaterialInterface* material);
 	inline FVector GetPosition(float& t);
 protected:
 	UPROPERTY()
@@ -38,7 +39,9 @@ protected:
 		FVector m_endPoint;
 	UPROPERTY()
 		FVector m_endPointRotation;
-public:	
+	UPROPERTY()
+		UMaterialInstanceDynamic* m_materialInstance;
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
