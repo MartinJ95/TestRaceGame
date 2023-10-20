@@ -34,7 +34,23 @@ ARacingTrack::ARacingTrack() : m_segments()
 		track->GetSegments().Emplace(track->GetWorld()->SpawnActor<ARaceTrackSegment>(ARaceTrackSegment::StaticClass()));
 		track->GetSegments().Last()->SetMesh(track->GetMesh(), track->GetMaterial());
 		track->GetSegments().Last()->SetActorTransform(FTransform(FVector(0.f, 0.f, 0.f) + (FVector(1.f, 0.f, 0.f) * (track->GetMesh()->GetBounds().SphereRadius*2)) * (track->GetSegments().Num()-1)));
-	}, this)
+	}, this),
+	m_positionSegments(
+		[](void* ptr)
+		{
+			ARacingTrack* track = static_cast<ARacingTrack*>(ptr);
+			if (track == nullptr)
+				return;
+			if (track->GetSegments().Num() == 0)
+				return;
+
+			track->GetSegments()[0]->SetPositioning(nullptr);
+
+			for (int i = 1; i < track->GetSegments().Num(); i++)
+			{
+				track->GetSegments()[i]->SetPositioning(track->GetSegments()[i - 1]);
+			}
+		}, this)
 #endif
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.

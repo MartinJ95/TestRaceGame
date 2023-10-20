@@ -25,6 +25,11 @@ void ARaceTrackSegment::SetMesh(UStaticMesh* newMesh, UMaterialInterface* materi
 void ARaceTrackSegment::SetPositioning(ARaceTrackSegment* previous)
 {
 	SetStartPosition(previous);
+	SetEndPointRotation(previous);
+	float sideDir;
+	SetEndPoint(previous, sideDir);
+	SetControlPoint(sideDir);
+	UpdateDynamicInstance();
 }
 
 // Called when the game starts or when spawned
