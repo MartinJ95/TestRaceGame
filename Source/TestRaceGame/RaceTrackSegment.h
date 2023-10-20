@@ -25,6 +25,7 @@ protected:
 	inline void SetEndPoint(ARaceTrackSegment* previous, float& sideDir);
 	inline void SetControlPoint(float& sideDir);
 	inline void SetDynamicInstance(UMaterialInterface* material);
+	inline void UpdateDynamicInstance();
 	inline FVector GetPosition(float& t);
 protected:
 	UPROPERTY()

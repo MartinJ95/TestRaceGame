@@ -83,6 +83,17 @@ inline void ARaceTrackSegment::SetDynamicInstance(UMaterialInterface* material)
 	m_materialInstance = UMaterialInstanceDynamic::Create(material, this);
 }
 
+inline void ARaceTrackSegment::UpdateDynamicInstance()
+{
+	if (m_materialInstance == nullptr)
+		return;
+
+	m_materialInstance->SetVectorParameterValue(TEXT("start"), m_startPoint);
+	m_materialInstance->SetVectorParameterValue(TEXT("end"), m_endPoint);
+	m_materialInstance->SetVectorParameterValue(TEXT("control"), m_controlPoint);
+	m_materialInstance->SetScalarParameterValue(TEXT("size"), m_meshComp->GetStaticMesh()->GetBounds().SphereRadius * 2);
+}
+
 inline FVector ARaceTrackSegment::GetPosition(float& t)
 {
 	if (t > 1.f)
