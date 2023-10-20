@@ -17,6 +17,8 @@ public:
 	ARaceTrackSegment();
 	void SetMesh(UStaticMesh* newMesh, UMaterialInterface* material);
 	void SetPositioning(const ARaceTrackSegment* previous);
+	inline void DrawDebugCurve() const;
+	inline FVector GetPosition(float& t) const;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -26,7 +28,7 @@ protected:
 	inline void SetControlPoint(const float& sideDir);
 	inline void SetDynamicInstance(UMaterialInterface* material);
 	inline void UpdateDynamicInstance();
-	inline FVector GetPosition(float& t);
+	
 protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;

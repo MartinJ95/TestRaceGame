@@ -2,6 +2,7 @@
 
 #include "RaceTrackSegment.h"
 #include "Math/UnrealMathUtility.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ARaceTrackSegment::ARaceTrackSegment()
@@ -30,6 +31,17 @@ void ARaceTrackSegment::SetPositioning(const ARaceTrackSegment* previous)
 	SetEndPoint(previous, sideDir);
 	SetControlPoint(sideDir);
 	UpdateDynamicInstance();
+}
+
+inline void ARaceTrackSegment::DrawDebugCurve() const
+{
+	DrawDebugSphere(GetWorld(), m_startPoint, 100.f, 16, FColor::Green, false, 0.1f);
+	DrawDebugSphere(GetWorld(), m_endPoint, 100.f, 16, FColor::Red, false, 0.1f);
+	DrawDebugSphere(GetWorld(), m_controlPoint, 100.f, 16, FColor::Yellow, false, 0.1f);
+	for (float i = 0.1; i < 1.f; i += 0.1f)
+	{
+		DrawDebugSphere(GetWorld(), GetPosition(i), 50.f, 16, FColor::Purple, false, 0.1f);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -79,8 +91,8 @@ inline void ARaceTrackSegment::SetControlPoint(const float& sideDir)
 	FVector toEnd = m_endPoint - m_startPoint;
 	toEnd *= 0.5;
 	float distance = toEnd.Size()*0.5f;
-	toEnd += (FVector::CrossProduct(m_startPoint, m_endPoint).GetSafeNormal() * (sideDir * 45.f));
-	m_controlPoint = toEnd;
+	toEnd += (FVector::CrossProduct(toEnd, FVector::UpVector).GetSafeNormal() * (sideDir * 45.f));
+	m_controlPoint = m_startPoint + toEnd;
 }
 
 inline void ARaceTrackSegment::SetDynamicInstance(UMaterialInterface* material)
@@ -100,7 +112,7 @@ inline void ARaceTrackSegment::UpdateDynamicInstance()
 	m_materialInstance->SetScalarParameterValue(TEXT("Size"), m_meshComp->GetStaticMesh()->GetBounds().SphereRadius * 2);
 }
 
-inline FVector ARaceTrackSegment::GetPosition(float& t)
+inline FVector ARaceTrackSegment::GetPosition(float& t) const
 {
 	if (t > 1.f)
 	{

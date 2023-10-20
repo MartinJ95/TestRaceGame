@@ -92,6 +92,10 @@ void ARacingTrack::Tick(float DeltaTime)
 	{
 		m_addSegment.CheckRunFunction();
 		m_positionSegments.CheckRunFunction();
+		for (int i = 0; i < m_segments.Num(); i++)
+		{
+			m_segments[i]->DrawDebugCurve();
+		}
 		return;
 	}
 #endif
