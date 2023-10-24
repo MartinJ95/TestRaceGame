@@ -4,12 +4,21 @@
 #include "Math/UnrealMathUtility.h"
 #include "DrawDebugHelpers.h"
 
+unsigned int ARaceTrackSegment::currentAmount = 0;
+
 // Sets default values
-ARaceTrackSegment::ARaceTrackSegment()
+ARaceTrackSegment::ARaceTrackSegment() : m_segmentMesh(), m_segmentDynamicMesh(),
+m_meshComp(), m_startPoint(0.f, 0.f, 0.f), m_controlPoint(0.f, 0.f, 0.f), m_endPoint(0.f, 0.f, 0.f),
+m_endPointRotation(0.f, 0.f, 0.f), m_materialInstance(), m_segmentID(0)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	m_meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("segmentMesh"));
+	currentAmount++;
+	m_segmentID = currentAmount;
+	FName name = *FString::Printf(TEXT("segmentMeshComp %i"), m_segmentID);
+	FName name2 = *FString::Printf(TEXT("segmentMesh %i"), m_segmentID);
+	m_meshComp = CreateDefaultSubobject<UStaticMeshComponent>(name);
+	//m_segmentDynamicMesh = CreateDefaultSubobject<UStaticMesh>(name2);
 	m_meshComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
@@ -18,9 +27,23 @@ void ARaceTrackSegment::SetMesh(UStaticMesh* newMesh, UMaterialInterface* materi
 	m_segmentMesh = newMesh;
 	if (m_segmentMesh == nullptr)
 		return;
+/*
+	FStaticMeshSourceModel* sourceModel = &m_segmentMesh->SourceModels[0];
+	FRawMesh rawMesh;
+	sourceModel->LoadRawMesh(rawMesh);
 
+	// Create a new model
+	//m_segmentDynamicMesh = NewObject<UStaticMesh>();
+	new(m_segmentDynamicMesh->SourceModels) FStaticMeshSourceModel();
+	m_segmentDynamicMesh->SourceModels[0].SaveRawMesh(rawMesh);
+
+	TArray<FText> BuildErrorsNuevo;
+	m_segmentDynamicMesh->Build(true, &BuildErrorsNuevo);
+	*/
+	m_segmentDynamicMesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), NULL, TEXT("/TestRaceGame/Content/pathSegment")));
 	m_meshComp->SetStaticMesh(m_segmentMesh);
 	SetDynamicInstance(material);
+
 }
 
 void ARaceTrackSegment::SetPositioning(const ARaceTrackSegment* previous)
@@ -83,7 +106,7 @@ inline void ARaceTrackSegment::SetEndPoint(const ARaceTrackSegment* previous, fl
 	rotatedStartDir.RotateAngleAxis(startRotation.Z, FVector::UpVector);
 	sideDir = m_endPointRotation.Z - startRotation.Z > 0 ? 1.f : -1.f;
 
-	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * (FMath::Abs(sideDir) * m_endPointRotation.Z);
+	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * ((m_segmentMesh->GetBounds().SphereRadius*2) * (FMath::Abs(sideDir) * m_endPointRotation.Z));
 }
 
 inline void ARaceTrackSegment::SetControlPoint(const float& sideDir)
@@ -99,6 +122,7 @@ inline void ARaceTrackSegment::SetDynamicInstance(UMaterialInterface* material)
 {
 	m_materialInstance = UMaterialInstanceDynamic::Create(material, this);
 	m_meshComp->GetStaticMesh()->SetMaterial(0, m_materialInstance);
+	//m_meshComp->SetMaterial(0, m_materialInstance);
 }
 
 inline void ARaceTrackSegment::UpdateDynamicInstance()
@@ -124,6 +148,16 @@ inline FVector ARaceTrackSegment::GetPosition(float& t) const
 		return m_startPoint;
 	}
 	return (FMath::Square(1.f - t)) * m_startPoint + 2 * t * (1.f - t) * m_controlPoint + FMath::Square(t) * m_endPoint;
+}
+
+inline void ARaceTrackSegment::SetID(const int id)
+{
+	m_segmentID = id;
+}
+
+ARaceTrackSegment::~ARaceTrackSegment()
+{
+	currentAmount--;
 }
 
 // Called every frame

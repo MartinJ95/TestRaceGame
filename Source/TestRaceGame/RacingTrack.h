@@ -35,6 +35,7 @@ public:
 	UStaticMesh* GetMesh() const;
 	UMaterialInterface* GetMaterial() const;
 	TArray<ARaceTrackSegment*>& GetSegments();
+	TArray<UStaticMesh*>& GetPool();
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,6 +44,8 @@ protected:
 	TArray<ARaceTrackSegment*> m_segments;
 	UPROPERTY(EditAnywhere)
 	UStaticMesh* m_pathSegmentMesh;
+	UPROPERTY(EditAnywhere)
+		TArray<UStaticMesh*> m_meshPool;
 	UPROPERTY(EditAnywhere)
 		UMaterialInterface* m_material;
 #if WITH_EDITOR

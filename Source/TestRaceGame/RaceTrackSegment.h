@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include <RawMesh/Public/RawMesh.h>
 #include "RaceTrackSegment.generated.h"
 
 UCLASS()
@@ -19,6 +20,8 @@ public:
 	void SetPositioning(const ARaceTrackSegment* previous);
 	inline void DrawDebugCurve() const;
 	inline FVector GetPosition(float& t) const;
+	inline void SetID(const int id);
+	~ARaceTrackSegment();
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -33,6 +36,8 @@ protected:
 	UPROPERTY()
 	UStaticMesh* m_segmentMesh;
 	UPROPERTY()
+		UStaticMesh* m_segmentDynamicMesh;
+	UPROPERTY()
 	UStaticMeshComponent* m_meshComp;
 	UPROPERTY()
 		FVector m_startPoint;
@@ -44,6 +49,9 @@ protected:
 		FVector m_endPointRotation;
 	UPROPERTY()
 		UMaterialInstanceDynamic* m_materialInstance;
+	UPROPERTY()
+		unsigned int m_segmentID;
+	static unsigned int currentAmount;
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

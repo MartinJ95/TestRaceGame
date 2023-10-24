@@ -31,8 +31,12 @@ ARacingTrack::ARacingTrack() : m_segments()
 		ARacingTrack* track = static_cast<ARacingTrack*>(ptr);
 		if (track == nullptr)
 			return;
+		if (track->GetPool().Num() <= track->GetSegments().Num())
+			return;
+		
 		track->GetSegments().Emplace(track->GetWorld()->SpawnActor<ARaceTrackSegment>(ARaceTrackSegment::StaticClass()));
-		track->GetSegments().Last()->SetMesh(track->GetMesh(), track->GetMaterial());
+		track->GetSegments().Last()->SetID(track->GetSegments().Num());
+		track->GetSegments().Last()->SetMesh(track->GetPool()[track->GetSegments().Num()], track->GetMaterial());
 		track->GetSegments().Last()->SetActorTransform(FTransform(FVector(0.f, 0.f, 0.f) + (FVector(1.f, 0.f, 0.f) * (track->GetMesh()->GetBounds().SphereRadius*2)) * (track->GetSegments().Num()-1)));
 	}, this),
 	m_positionSegments(
@@ -74,6 +78,11 @@ ARacingTrack::ARacingTrack() : m_segments()
 		TArray<ARaceTrackSegment*>& ARacingTrack::GetSegments()
 		{
 			return m_segments;
+		}
+
+		TArray<UStaticMesh*>& ARacingTrack::GetPool()
+		{
+			return m_meshPool;
 		}
 
 
