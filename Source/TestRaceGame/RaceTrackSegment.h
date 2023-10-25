@@ -46,6 +46,8 @@ protected:
 	UPROPERTY()
 		FVector m_endPoint;
 	UPROPERTY()
+		FVector m_startPointRotation;
+	UPROPERTY()
 		FVector m_endPointRotation;
 	UPROPERTY()
 		UMaterialInstanceDynamic* m_materialInstance;

@@ -79,9 +79,11 @@ inline void ARaceTrackSegment::SetStartPosition(const ARaceTrackSegment* previou
 	if (previous == nullptr)
 	{
 		m_startPoint = FVector::ZeroVector;
+		m_startPointRotation = FVector::ZeroVector;
 		return;
 	}
 	m_startPoint = previous->m_endPoint;
+	m_startPointRotation = previous->m_startPointRotation;
 }
 
 inline void ARaceTrackSegment::SetEndPointRotation(const ARaceTrackSegment* previous)
@@ -99,14 +101,14 @@ inline void ARaceTrackSegment::SetEndPoint(const ARaceTrackSegment* previous, fl
 	FVector startRotation = FVector::ZeroVector;
 	if (previous != nullptr)
 		startRotation = previous->m_endPointRotation;
-	m_endPoint = m_startPoint + (FVector::ForwardVector * ((m_segmentMesh->GetBounds().SphereRadius * 2) * (1.f-(m_endPointRotation.Z / 30.f))));
+	m_endPoint = m_startPoint + (FVector::ForwardVector * ((m_segmentMesh->GetBounds().SphereRadius * 2) * (1.f-((m_endPointRotation.Z - m_startPointRotation.Z) / 30.f))));
 	
 	FVector rotatedStartDir = FVector::ForwardVector;
 	rotatedStartDir.RotateAngleAxis(startRotation.Y, FVector::RightVector);
 	rotatedStartDir.RotateAngleAxis(startRotation.Z, FVector::UpVector);
 	sideDir = m_endPointRotation.Z - startRotation.Z > 0 ? 1.f : -1.f;
 
-	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * ((m_segmentMesh->GetBounds().SphereRadius*2) * (FMath::Abs(sideDir) * m_endPointRotation.Z));
+	m_endPoint += (FVector::CrossProduct(m_endPoint - m_startPoint, FVector::UpVector).GetSafeNormal()) * ((m_segmentMesh->GetBounds().SphereRadius*2) * (FMath::Abs(sideDir) *((m_endPointRotation.Z - m_startPointRotation.Z)/30.f)));
 }
 
 inline void ARaceTrackSegment::SetControlPoint(const float& sideDir)
