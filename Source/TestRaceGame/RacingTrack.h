@@ -14,7 +14,7 @@ struct FEditorFunction
 public:
 	FEditorFunction();
 	FEditorFunction(void* owner);
-	FEditorFunction(const std::function<void(void* ptr)>& function, void* owner);
+	FEditorFunction(const std::function<void(void* ptr)>&& function, void* owner);
 	void CheckRunFunction();
 protected:
 	UPROPERTY(EditAnywhere)

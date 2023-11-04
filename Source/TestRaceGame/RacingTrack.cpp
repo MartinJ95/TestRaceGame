@@ -10,7 +10,7 @@ FEditorFunction::FEditorFunction() :
 FEditorFunction::FEditorFunction(void* owner) :
 	m_shouldRun(false), m_function([](void* ptr) {}), ptr(owner) {}
 
-FEditorFunction::FEditorFunction(const std::function<void(void* ptr)>& function, void* owner) :
+FEditorFunction::FEditorFunction(const std::function<void(void* ptr)>&& function, void* owner) :
 	m_shouldRun(false), m_function(function), ptr(owner) {}
 
 void FEditorFunction::CheckRunFunction()
@@ -25,7 +25,7 @@ void FEditorFunction::CheckRunFunction()
 // Sets default values
 ARacingTrack::ARacingTrack() : m_segments()
 #if WITH_EDITOR 
-, m_addSegment(
+, m_addSegment(std::move(
 	[](void* ptr)
 	{
 		ARacingTrack* track = static_cast<ARacingTrack*>(ptr);
@@ -38,8 +38,8 @@ ARacingTrack::ARacingTrack() : m_segments()
 		track->GetSegments().Last()->SetID(track->GetSegments().Num());
 		track->GetSegments().Last()->SetMesh(track->GetPool()[track->GetSegments().Num()], track->GetMaterial());
 		track->GetSegments().Last()->SetActorTransform(FTransform(FVector(0.f, 0.f, 0.f) + (FVector(1.f, 0.f, 0.f) * (track->GetMesh()->GetBounds().SphereRadius*2)) * (track->GetSegments().Num()-1)));
-	}, this),
-	m_positionSegments(
+	}), this),
+	m_positionSegments(std::move(
 		[](void* ptr)
 		{
 			ARacingTrack* track = static_cast<ARacingTrack*>(ptr);
@@ -54,7 +54,7 @@ ARacingTrack::ARacingTrack() : m_segments()
 			{
 				track->GetSegments()[i]->SetPositioning(track->GetSegments()[i - 1]);
 			}
-		}, this)
+		}), this)
 #endif
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
