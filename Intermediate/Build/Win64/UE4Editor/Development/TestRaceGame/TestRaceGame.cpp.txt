@@ -1,2 +1,0 @@
-C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Intermediate\Build\Win64\UE4Editor\Development\TestRaceGame\Definitions.TestRaceGame.h
-C:\Users\marti\Documents\GitHub\RacingGame\TestRaceGame\Source\TestRaceGame\TestRaceGame.h
