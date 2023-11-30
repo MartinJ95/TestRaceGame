@@ -84,7 +84,7 @@ inline void ARaceTrackSegment::SetStartPosition(const ARaceTrackSegment* previou
 		return;
 	}
 	m_startPoint = previous->m_endPoint;
-	m_startPointRotation = previous->m_startPointRotation;
+	m_startPointRotation = previous->m_endPointRotation;
 }
 
 inline void ARaceTrackSegment::SetEndPointRotation(const ARaceTrackSegment* previous)
@@ -117,7 +117,8 @@ inline void ARaceTrackSegment::SetControlPoint(const float& sideDir)
 	FVector toEnd = m_endPoint - m_startPoint;
 	toEnd *= 0.5;
 	float distance = toEnd.Size()*0.5f;
-	toEnd += (FVector::CrossProduct(toEnd, FVector::UpVector).GetSafeNormal() * (sideDir * 45.f));
+	float sideOffset = sideDir * (450.f * (60.f / abs(m_endPointRotation.Z - m_startPointRotation.Z)));
+	toEnd += (FVector::CrossProduct(toEnd, FVector::UpVector).GetSafeNormal() * sideOffset);
 	m_controlPoint = m_startPoint + toEnd;
 }
 
@@ -137,6 +138,8 @@ inline void ARaceTrackSegment::UpdateDynamicInstance()
 	m_materialInstance->SetVectorParameterValue(TEXT("EndPosition"), m_endPoint);
 	m_materialInstance->SetVectorParameterValue(TEXT("ControlPoint"), m_controlPoint);
 	m_materialInstance->SetScalarParameterValue(TEXT("Size"), m_meshComp->GetStaticMesh()->GetBounds().SphereRadius * 2);
+	m_materialInstance->SetVectorParameterValue(TEXT("StartRotation"), m_startPointRotation);
+	m_materialInstance->SetVectorParameterValue(TEXT("EndRotation"), m_endPointRotation);
 }
 
 inline FVector ARaceTrackSegment::GetPosition(float& t) const
