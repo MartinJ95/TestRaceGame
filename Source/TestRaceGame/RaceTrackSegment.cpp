@@ -54,6 +54,7 @@ void ARaceTrackSegment::SetPositioning(const ARaceTrackSegment* previous)
 	SetEndPoint(previous, sideDir);
 	SetControlPoint(sideDir);
 	UpdateDynamicInstance();
+	SetActorLocation(m_startPoint);
 }
 
 inline void ARaceTrackSegment::DrawDebugCurve() const
