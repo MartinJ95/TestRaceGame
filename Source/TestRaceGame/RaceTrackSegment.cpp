@@ -135,7 +135,7 @@ inline void ARaceTrackSegment::UpdateDynamicInstance()
 
 	m_materialInstance->SetVectorParameterValue(TEXT("StartPosition"), m_startPoint);
 	m_materialInstance->SetVectorParameterValue(TEXT("EndPosition"), m_endPoint);
-	m_materialInstance->SetVectorParameterValue(TEXT("ControlPosition"), m_controlPoint);
+	m_materialInstance->SetVectorParameterValue(TEXT("ControlPoint"), m_controlPoint);
 	m_materialInstance->SetScalarParameterValue(TEXT("Size"), m_meshComp->GetStaticMesh()->GetBounds().SphereRadius * 2);
 }
 
